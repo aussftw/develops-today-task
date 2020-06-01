@@ -3,8 +3,8 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { AppStateType } from '../../redux/store';
 import { PostsType } from '../../interfaces';
-import { getPost } from '../../redux/actions/index';
 import useStyles from './useStyles';
+import { getPost } from '../../redux/actions/index';
 
 type OwnPropsTypes = {
   singlePost: PostsType;
@@ -13,10 +13,11 @@ type MapStatePropsType = {
   singlePost: PostsType;
   error: boolean;
 };
-
 type MapDispatchPropsType = {
   getPost: (postId: number) => void;
 };
+
+type PropsType = MapStatePropsType & OwnPropsTypes & MapDispatchPropsType;
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   return {
@@ -25,7 +26,7 @@ const mapStateToProps = (state: AppStateType): MapStatePropsType => {
   };
 };
 
-const PostDetails: React.FC<OwnPropsTypes> = ({ singlePost }) => {
+const PostDetails: React.FC<PropsType> = ({ singlePost, getPost }) => {
   const classes = useStyles();
   return (
     <>
@@ -43,6 +44,6 @@ const PostDetails: React.FC<OwnPropsTypes> = ({ singlePost }) => {
   );
 };
 
-export default compose(connect<MapStatePropsType, OwnPropsTypes, MapDispatchPropsType, AppStateType>(mapStateToProps))(
-  PostDetails
-);
+export default compose(
+  connect<MapStatePropsType, MapDispatchPropsType, OwnPropsTypes, AppStateType>(mapStateToProps, { getPost })
+)(PostDetails);

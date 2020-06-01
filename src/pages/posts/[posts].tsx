@@ -45,7 +45,7 @@ const Post: React.FC<PropsType> = ({ getPost, singlePost, error }) => {
     <>
       {singlePost ? (
         <Wrapper>
-          <PostDetails />
+          <PostDetails singlePost={singlePost} />
         </Wrapper>
       ) : (
         <Wrapper>

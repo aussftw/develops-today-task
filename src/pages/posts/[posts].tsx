@@ -29,6 +29,8 @@ type MapDispatchPropsType = {
 type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsTypes;
 
 const Post: React.FC<PropsType> = ({ getPost, singlePost, error }) => {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+  // @ts-ignore
   const id: string = useRouter().query.posts;
   const postId: number = parseInt(id);
 

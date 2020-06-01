@@ -40,6 +40,8 @@ const CreateNewPost: React.FC<PropsType> = ({ header, createPost }) => {
   };
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
     setPostData({ ...postData, [event.target.name]: event.target.value });
   };
 
@@ -53,6 +55,8 @@ const CreateNewPost: React.FC<PropsType> = ({ header, createPost }) => {
           <TextValidator
             value={postData.title}
             name="title"
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             onChange={(e) => handleChange(e)}
             variant="outlined"
             placeholder="Title"
@@ -62,6 +66,8 @@ const CreateNewPost: React.FC<PropsType> = ({ header, createPost }) => {
           />
           <TextValidator
             value={postData.body}
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+            // @ts-ignore
             onChange={(e) => handleChange(e)}
             name="body"
             multiline={true}

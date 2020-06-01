@@ -37,4 +37,6 @@ const PostDetails: React.FC<OwnPropsTypes> = ({ singlePost }) => {
     </>
   );
 };
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore
 export default compose(connect<MapStatePropsType, OwnPropsTypes, AppStateType>(mapStateToProps))(PostDetails);

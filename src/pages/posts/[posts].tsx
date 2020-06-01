@@ -23,6 +23,7 @@ type MapStatePropsType = {
   singlePost: PostsType;
   error: boolean;
 };
+
 type MapDispatchPropsType = {
   getPost: (postId: number) => void;
 };

@@ -3,6 +3,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { AppStateType } from '../../redux/store';
 import { PostsType } from '../../interfaces';
+import { getPost } from '../../redux/actions/index';
 import useStyles from './useStyles';
 
 type OwnPropsTypes = {
@@ -11,6 +12,10 @@ type OwnPropsTypes = {
 type MapStatePropsType = {
   singlePost: PostsType;
   error: boolean;
+};
+
+type MapDispatchPropsType = {
+  getPost: (postId: number) => void;
 };
 
 const mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -37,6 +42,7 @@ const PostDetails: React.FC<OwnPropsTypes> = ({ singlePost }) => {
     </>
   );
 };
-// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-// @ts-ignore
-export default compose(connect<MapStatePropsType, OwnPropsTypes, AppStateType>(mapStateToProps))(PostDetails);
+
+export default compose(connect<MapStatePropsType, OwnPropsTypes, MapDispatchPropsType, AppStateType>(mapStateToProps))(
+  PostDetails
+);

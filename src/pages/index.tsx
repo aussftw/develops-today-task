@@ -28,7 +28,7 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
     <PostsWrapper>
       {posts.length ? (
         [...posts].reverse().map((post: PostsType) => (
-          <Link href={`/posts?${post.id}`} key={post.id} as={`/posts/${post.id}`}>
+          <Link as={`/posts/${post.id}`} href={`/posts?${post.id}`} key={post.id}>
             <Post>
               <Card>
                 <CardHeader
@@ -36,7 +36,7 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
                     typeof post.title === 'undefined' || post.title === ''
                       ? 'Oopps, looks like someone forgot about title.'
                       : post.title.length > 30
-                      ? post.title + '...'
+                      ? post.title.slice(0, 30) + '...'
                       : post.title
                   }
                   style={{ backgroundColor: '#77a0a9', minHeight: '98px' }}

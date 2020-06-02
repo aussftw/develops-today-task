@@ -41,7 +41,7 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
                       : post.body}
                   </Typography>
                 </CardContent>
-                <CardActions disableSpacing>
+                {/* <CardActions disableSpacing>
                   <IconButton aria-label="add to favorites">
                     <Link key={post.id} href={`/posts?slug=${post.id}`} as={`/posts/${post.id}`}>
                       <EditIcon />
@@ -50,13 +50,13 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
                   <IconButton aria-label="add to favorites">
                     <DeleteIcon />
                   </IconButton>
-                </CardActions>
+                </CardActions> */}
               </Card>
             </Post>
           </Link>
         ))
       ) : (
-        <Typography>There are no available posts. You should try to make your own!</Typography>
+        <Typography>There are no available posts, but you can write one.</Typography>
       )}
     </PostsWrapper>
   );

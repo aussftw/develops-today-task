@@ -34,11 +34,46 @@ const useStyles = makeStyles({
     textAlign: 'center',
   },
 
+  modal: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  paper: {
+    backgroundColor: '#4B2E39',
+    boxShadow: '5px 5px 2px 1px rgba(0, 0, 0, .2);',
+    padding: '5rem 40px',
+    maxWidth: 800,
+    margin: '0 10px',
+    borderRadius: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    outline: 'none',
+  },
+
+  modalText: {
+    color: '#fff',
+    padding: '1rem 0',
+  },
+
+  modalBtn: {
+    padding: '0.5rem 2rem',
+    backgroundColor: '#77a0a9',
+    color: '#fff',
+    minWidth: '95px',
+    '&:hover': {
+      backgroundColor: '#6f7d8c',
+      color: '#fff',
+    },
+  },
+
   btn: {
     marginTop: '1rem',
     letterSpacing: '2px',
     padding: '13px 1rem',
-    color: 'white',
+    color: '#fff',
     width: '50%',
     backgroundColor: '#4B2E39',
     '&:hover': {

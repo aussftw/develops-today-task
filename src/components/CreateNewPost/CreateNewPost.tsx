@@ -1,17 +1,15 @@
+import { useState } from 'react';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { AppStateType } from '../../redux/store';
 import { createPost } from '../../redux/actions/index';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import { Typography, Box, Button } from '@material-ui/core';
-import { useState } from 'react';
+import { Typography, Box, Button, Modal, Backdrop, Fade, Container } from '@material-ui/core';
 import { UserPost } from '../../interfaces/index';
-import Router from 'next/router';
+import styled from 'styled-components';
 import useStyles from './useStyles';
 
-type OwnPropsTypes = {
-  header: string;
-};
+type OwnPropsTypes = {};
 
 type PostTypes = {
   body: string;
@@ -29,13 +27,19 @@ type MapDispatchPropsType = {
 
 type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsTypes;
 
-const CreateNewPost: React.FC<PropsType> = ({ header, createPost }) => {
+const CreateNewPost: React.FC<PropsType> = ({ createPost }) => {
+  const [postData, setPostData] = useState<UserPost>({ title: '', body: '' });
+  const [open, setOpen] = useState<boolean>(false);
+
+  console.log(open, 'modal');
+
   const classes = useStyles();
 
-  const [postData, setPostData] = useState<UserPost>({ title: '', body: '' });
-
   const onSubmit = (values: any) => {
+    console.log('fire');
     createPost(postData.title, postData.body);
+    setPostData({ title: '', body: '' });
+    setOpen(false);
     Router.push('/');
   };
 
@@ -45,10 +49,12 @@ const CreateNewPost: React.FC<PropsType> = ({ header, createPost }) => {
     setPostData({ ...postData, [event.target.name]: event.target.value });
   };
 
+  //TODO: disable button
+
   return (
     <Box className={classes.wrapper}>
       <Box className={classes.container}>
-        <ValidatorForm onSubmit={onSubmit} autoComplete="off" noValidate={true}>
+        <ValidatorForm autoComplete="off" onSubmit={onSubmit} noValidate={true}>
           <Typography variant="h5" className={classes.title}>
             Create new post
           </Typography>
@@ -78,9 +84,36 @@ const CreateNewPost: React.FC<PropsType> = ({ header, createPost }) => {
             className={classes.textField}
             rows={10}
           />
-          <Button type="submit" variant="contained" className={classes.btn}>
-            {header}
+          <Button variant="contained" className={classes.btn} onClick={(e) => setOpen(true)}>
+            Tell your story
           </Button>
+          <Modal
+            aria-labelledby="transition-modal-title"
+            aria-describedby="transition-modal-description"
+            className={classes.modal}
+            open={open}
+            onClose={(e) => setOpen(false)}
+            closeAfterTransition
+            disablePortal
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+              timeout: 500,
+            }}
+          >
+            <Fade in={open}>
+              <Container className={classes.paper}>
+                <Typography className={classes.modalText}>Are you sure that you want to public your post?</Typography>
+                <ButtonsContainer>
+                  <Button type="submit" className={classes.modalBtn} onSubmit={onSubmit}>
+                    Yes
+                  </Button>
+                  <Button className={classes.modalBtn} onClick={(e) => setOpen(false)}>
+                    No
+                  </Button>
+                </ButtonsContainer>
+              </Container>
+            </Fade>
+          </Modal>
         </ValidatorForm>
       </Box>
     </Box>
@@ -98,3 +131,14 @@ export default compose(
     createPost,
   })
 )(CreateNewPost);
+
+const ButtonsContainer = styled.div`
+  display: flex;
+  margin: 2rem 0;
+  justify-content: space-between;
+  width: 100%;
+
+  @media (min-width: 992px) {
+    width: 50%;
+  }
+`;

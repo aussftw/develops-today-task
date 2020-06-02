@@ -2,6 +2,25 @@ import styled from 'styled-components';
 import Link from 'next/link';
 import AppBar from '@material-ui/core/AppBar';
 
+const Header: React.FC = () => {
+  return (
+    <HeaderWrapper>
+      <StyledHeader>
+        <ButtonsWrapper>
+          <Link href="/">
+            <PostsButton>BLOG</PostsButton>
+          </Link>
+          <Link href={'/posts/new'}>
+            <AddPostsButton> Add Post</AddPostsButton>
+          </Link>
+        </ButtonsWrapper>
+      </StyledHeader>
+    </HeaderWrapper>
+  );
+};
+
+export default Header;
+
 const StyledHeader = styled(AppBar)`
   display: flex;
   align-items: center;
@@ -50,22 +69,3 @@ const AddPostsButton = styled.button`
     background-color: #6f7d8c;
   }
 `;
-
-const Header: React.FC = () => {
-  return (
-    <HeaderWrapper>
-      <StyledHeader>
-        <ButtonsWrapper>
-          <Link href="/">
-            <PostsButton>POSTS</PostsButton>
-          </Link>
-          <Link href={'/posts/new'}>
-            <AddPostsButton> Add Post</AddPostsButton>
-          </Link>
-        </ButtonsWrapper>
-      </StyledHeader>
-    </HeaderWrapper>
-  );
-};
-
-export default Header;

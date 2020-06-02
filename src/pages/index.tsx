@@ -10,39 +10,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { getPosts } from '../redux/actions/index';
 import { AppStateType } from '../redux/store';
 
-const Post = styled.div`
-  padding-right: 10px;
-  width: 32.7%;
-  margin-bottom: 10px;
-  display: flex;
-
-  & > div {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 100%;
-  }
-  @media (max-width: 992px) {
-    width: 50%;
-    padding-right: 10px;
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-    padding-right: 0;
-    &:nth-child(3n) {
-      padding-right: 0;
-    }
-  }
-`;
-
-const PostsWrapper = styled.div`
-  display: flex;
-  flex-flow: row wrap !important;
-  justify-content: flex-start;
-  margin: 5rem 1rem;
-  cursor: pointer;
-`;
-
 type MapStatePropsType = {
   posts: Array<PostsType>;
   error: boolean;
@@ -107,3 +74,36 @@ export default compose(
     getPosts,
   })
 )(IndexPage);
+
+const Post = styled.div`
+  padding-right: 10px;
+  width: 32.7%;
+  margin-bottom: 10px;
+  display: flex;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+  }
+  @media (max-width: 992px) {
+    width: 50%;
+    padding-right: 10px;
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    padding-right: 0;
+    &:nth-child(3n) {
+      padding-right: 0;
+    }
+  }
+`;
+
+const PostsWrapper = styled.div`
+  display: flex;
+  flex-flow: row wrap !important;
+  justify-content: flex-start;
+  margin: 5rem 1rem;
+  cursor: pointer;
+`;

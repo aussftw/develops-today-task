@@ -9,13 +9,6 @@ import { PostsType } from '../../interfaces';
 import { useRouter } from 'next/router';
 import PostDetails from '../../components/PostDetails/PostDetails';
 
-const Wrapper = styled.div`
-  margin: 7rem auto;
-  @media (min-width: 998px) {
-    margin: 10rem auto;
-  }
-`;
-
 type OwnPropsTypes = {
   postId: number;
 };
@@ -68,3 +61,10 @@ export default compose(
     getPost,
   })
 )(Post);
+
+const Wrapper = styled.div`
+  margin: 7rem auto;
+  @media (min-width: 998px) {
+    margin: 10rem auto;
+  }
+`;

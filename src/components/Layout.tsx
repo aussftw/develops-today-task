@@ -1,19 +1,13 @@
 import * as React from 'react';
 import Head from 'next/head';
 import Header from './Header';
+import Footer from './Footer';
 import styled from 'styled-components';
 import { CssBaseline } from '@material-ui/core';
 
 type Props = {
   title?: string;
 };
-
-const Wrapper = styled.div`
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 2rem 0px;
-  width: 100%;
-`;
 
 const LayoutContainer: React.FC<Props> = ({ children, title = 'Blog' }) => (
   <div>
@@ -25,7 +19,15 @@ const LayoutContainer: React.FC<Props> = ({ children, title = 'Blog' }) => (
     <Header />
     <CssBaseline />
     <Wrapper>{children}</Wrapper>
+    <Footer />
   </div>
 );
 
 export default LayoutContainer;
+
+const Wrapper = styled.div`
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 2rem 0px;
+  width: 100%;
+`;

@@ -15,9 +15,7 @@ const Post = styled.div`
   width: 32.7%;
   margin-bottom: 10px;
   display: flex;
-  &:nth-child(3n) {
-    padding-right: 0;
-  }
+
   & > div {
     display: flex;
     flex-direction: column;
@@ -27,12 +25,6 @@ const Post = styled.div`
   @media (max-width: 992px) {
     width: 50%;
     padding-right: 10px;
-    &:nth-child(even) {
-      padding-right: 0 !important;
-    }
-    &:nth-child(3n) {
-      padding-right: 10px;
-    }
   }
   @media (max-width: 768px) {
     width: 100%;
@@ -71,7 +63,7 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
     <PostsWrapper>
       {posts.length ? (
         [...posts].reverse().map((post: PostsType) => (
-          <Link href={`/posts?slug=${post.id}`} key={post.id} as={`/posts/${post.id}`}>
+          <Link href={`/posts?${post.id}`} key={post.id} as={`/posts/${post.id}`}>
             <Post>
               <Card>
                 <CardHeader title={post.title} style={{ backgroundColor: '#77a0a9' }} />

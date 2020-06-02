@@ -8,6 +8,7 @@ import { Typography, Box, Button, Modal, Backdrop, Fade, Container } from '@mate
 import { UserPost } from '../../interfaces/index';
 import styled from 'styled-components';
 import useStyles from './useStyles';
+import Router from 'next/router';
 
 type OwnPropsTypes = {};
 
@@ -31,12 +32,9 @@ const CreateNewPost: React.FC<PropsType> = ({ createPost }) => {
   const [postData, setPostData] = useState<UserPost>({ title: '', body: '' });
   const [open, setOpen] = useState<boolean>(false);
 
-  console.log(open, 'modal');
-
   const classes = useStyles();
 
   const onSubmit = (values: any) => {
-    console.log('fire');
     createPost(postData.title, postData.body);
     setPostData({ title: '', body: '' });
     setOpen(false);

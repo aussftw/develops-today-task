@@ -2,13 +2,11 @@ import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { PostsType } from '../interfaces/index';
-import Link from 'next/link';
-import styled from 'styled-components';
-import { Card, Typography, IconButton, CardHeader, CardContent, CardActions } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { Card, Typography, CardHeader, CardContent } from '@material-ui/core';
 import { getPosts } from '../redux/actions/index';
 import { AppStateType } from '../redux/store';
+import Link from 'next/link';
+import styled from 'styled-components';
 
 type MapStatePropsType = {
   posts: Array<PostsType>;
@@ -33,24 +31,21 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
           <Link href={`/posts?${post.id}`} key={post.id} as={`/posts/${post.id}`}>
             <Post>
               <Card>
-                <CardHeader title={post.title} style={{ backgroundColor: '#77a0a9' }} />
-                <CardContent>
+                <CardHeader
+                  title={
+                    typeof post.title === 'undefined' || post.title === ''
+                      ? 'Oopps, looks like someone forgot about title.'
+                      : post.title.length > 30
+                      ? post.title + '...'
+                      : post.title
+                  }
+                  style={{ backgroundColor: '#77a0a9', minHeight: '98px' }}
+                />
+                <CardContent style={{ minHeight: '170px' }}>
                   <Typography>
-                    {typeof post.body === 'undefined' || post.body.length < 0
-                      ? 'ohhh, empty post, you see!'
-                      : post.body}
+                    {typeof post.body === 'undefined' || post.body === '' ? 'Oopps, empty post, you see!' : post.body}
                   </Typography>
                 </CardContent>
-                {/* <CardActions disableSpacing>
-                  <IconButton aria-label="add to favorites">
-                    <Link key={post.id} href={`/posts?slug=${post.id}`} as={`/posts/${post.id}`}>
-                      <EditIcon />
-                    </Link>
-                  </IconButton>
-                  <IconButton aria-label="add to favorites">
-                    <DeleteIcon />
-                  </IconButton>
-                </CardActions> */}
               </Card>
             </Post>
           </Link>
@@ -76,9 +71,9 @@ export default compose(
 )(IndexPage);
 
 const Post = styled.div`
-  padding-right: 10px;
+  padding-right: 1rem;
   width: 32.7%;
-  margin-bottom: 10px;
+  margin-bottom: 2rem;
   display: flex;
 
   & > div {
@@ -94,9 +89,6 @@ const Post = styled.div`
   @media (max-width: 768px) {
     width: 100%;
     padding-right: 0;
-    &:nth-child(3n) {
-      padding-right: 0;
-    }
   }
 `;
 

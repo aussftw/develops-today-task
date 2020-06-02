@@ -30,4 +30,5 @@ const Wrapper = styled.div`
   margin: 0 auto;
   padding: 2rem 0px;
   width: 100%;
+  min-height: calc(100vh - 98px);
 `;

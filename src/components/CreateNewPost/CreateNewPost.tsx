@@ -48,7 +48,7 @@ const CreateNewPost: React.FC<PropsType> = ({ header, createPost }) => {
   return (
     <Box className={classes.wrapper}>
       <Box className={classes.container}>
-        <ValidatorForm onSubmit={onSubmit} autoComplete="off" noValidate={false}>
+        <ValidatorForm onSubmit={onSubmit} autoComplete="off" noValidate={true}>
           <Typography variant="h5" className={classes.title}>
             Create new post
           </Typography>

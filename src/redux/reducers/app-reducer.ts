@@ -1,5 +1,6 @@
 import { PostsType } from '../../interfaces/index';
 import * as constants from '../constants';
+import { AppAcationTypes } from '../actions/index';
 
 const initialState = {
   posts: [] as Array<PostsType>,
@@ -7,7 +8,7 @@ const initialState = {
   error: false,
 };
 
-const appReducer = (state = initialState, action: any) => {
+const appReducer = (state = initialState, action: AppAcationTypes) => {
   switch (action.type) {
     case constants.SET_POSTS:
       return {

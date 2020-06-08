@@ -1,32 +1,10 @@
 import { Typography, Card, CardHeader, CardContent } from '@material-ui/core';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/store';
-import { PostsType } from '../../interfaces';
 import useStyles from './useStyles';
-import { getPost } from '../../redux/actions/index';
 
-type OwnPropsTypes = {
-  singlePost: PostsType;
-};
-type MapStatePropsType = {
-  singlePost: PostsType;
-  error: boolean;
-};
-type MapDispatchPropsType = {
-  getPost: (postId: number) => void;
-};
-
-type PropsType = MapStatePropsType & OwnPropsTypes & MapDispatchPropsType;
-
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-  return {
-    singlePost: state.app.singlePost,
-    error: state.app.error,
-  };
-};
-
-const PostDetails: React.FC<PropsType> = ({ singlePost, getPost }) => {
+const PostDetails: React.FC = () => {
+  const singlePost = useSelector((state: AppStateType) => state.app.singlePost);
   const classes = useStyles();
   return (
     <>
@@ -44,6 +22,4 @@ const PostDetails: React.FC<PropsType> = ({ singlePost, getPost }) => {
   );
 };
 
-export default compose(
-  connect<MapStatePropsType, MapDispatchPropsType, OwnPropsTypes, AppStateType>(mapStateToProps, { getPost })
-)(PostDetails);
+export default PostDetails;

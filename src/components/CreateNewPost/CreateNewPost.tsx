@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { AppStateType } from '../../redux/store';
+import { useDispatch } from 'react-redux';
 import { createPost } from '../../redux/actions/index';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Typography, Box, Button, Modal, Backdrop, Fade, Container } from '@material-ui/core';
@@ -10,35 +8,18 @@ import styled from 'styled-components';
 import useStyles from './useStyles';
 import Router from 'next/router';
 
-type OwnPropsTypes = {};
-
-type PostTypes = {
-  body: string;
-  title: string;
-  id: number;
-};
-
-type MapStatePropsType = {
-  singlePost: PostTypes;
-};
-
-type MapDispatchPropsType = {
-  createPost: (title: string, body: string) => void;
-};
-
-type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsTypes;
-
-const CreateNewPost: React.FC<PropsType> = ({ createPost }) => {
+const CreateNewPost: React.FC = () => {
+  const dispatch = useDispatch();
   const [postData, setPostData] = useState<UserPost>({ title: '', body: '' });
   const [open, setOpen] = useState<boolean>(false);
 
   const classes = useStyles();
 
-  const onSubmit = (values: any) => {
-    createPost(postData.title, postData.body);
+  const onSubmit = async () => {
+    dispatch(createPost(postData.title, postData.body));
     setPostData({ title: '', body: '' });
     setOpen(false);
-    Router.push('/');
+    await Router.push('/');
   };
 
   const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -82,7 +63,7 @@ const CreateNewPost: React.FC<PropsType> = ({ createPost }) => {
             className={classes.textField}
             rows={10}
           />
-          <Button variant="contained" className={classes.btn} onClick={(e) => setOpen(true)}>
+          <Button variant="contained" className={classes.btn} onClick={() => setOpen(true)}>
             Tell your story
           </Button>
           <Modal
@@ -105,7 +86,7 @@ const CreateNewPost: React.FC<PropsType> = ({ createPost }) => {
                   <Button type="submit" className={classes.modalBtn} onSubmit={onSubmit}>
                     Yes
                   </Button>
-                  <Button className={classes.modalBtn} onClick={(e) => setOpen(false)}>
+                  <Button className={classes.modalBtn} onClick={() => setOpen(false)}>
                     No
                   </Button>
                 </ButtonsContainer>
@@ -118,17 +99,7 @@ const CreateNewPost: React.FC<PropsType> = ({ createPost }) => {
   );
 };
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-  return {
-    singlePost: state.app.singlePost,
-  };
-};
-
-export default compose(
-  connect<MapStatePropsType, MapDispatchPropsType, OwnPropsTypes, AppStateType>(mapStateToProps, {
-    createPost,
-  })
-)(CreateNewPost);
+export default CreateNewPost;
 
 const ButtonsContainer = styled.div`
   display: flex;

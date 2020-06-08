@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { compose } from 'redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { PostsType } from '../interfaces/index';
 import { Card, Typography, CardHeader, CardContent } from '@material-ui/core';
 import { getPosts } from '../redux/actions/index';
@@ -8,20 +7,11 @@ import { AppStateType } from '../redux/store';
 import Link from 'next/link';
 import styled from 'styled-components';
 
-type MapStatePropsType = {
-  posts: Array<PostsType>;
-  error: boolean;
-};
-type MapDispatchPropsType = {
-  getPosts: () => void;
-};
-
-type OwnPropsType = {};
-type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType;
-
-const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
+const IndexPage: React.FC = () => {
+  const posts: [] = useSelector((state: AppStateType) => state.app.posts);
+  const dispatch = useDispatch();
   useEffect(() => {
-    getPosts();
+    dispatch(getPosts());
   }, []);
 
   return (
@@ -29,6 +19,8 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
       {posts.length ? (
         [...posts].reverse().map((post: PostsType) => (
           <Link as={`/posts/${post.id}`} href={`/posts?${post.id}`} key={post.id}>
+            {/* <Link href={`/posts?$/{post.id}`} key={post.id}>
+            <a> */}
             <Post>
               <Card>
                 <CardHeader
@@ -48,6 +40,7 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
                 </CardContent>
               </Card>
             </Post>
+            {/* </a> */}
           </Link>
         ))
       ) : (
@@ -57,18 +50,7 @@ const IndexPage: React.FC<PropsType> = ({ getPosts, posts, error }) => {
   );
 };
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-  return {
-    posts: state.app.posts,
-    error: state.app.error,
-  };
-};
-
-export default compose(
-  connect<MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType>(mapStateToProps, {
-    getPosts,
-  })
-)(IndexPage);
+export default IndexPage;
 
 const Post = styled.div`
   padding-right: 1rem;

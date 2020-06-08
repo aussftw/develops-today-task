@@ -1,36 +1,22 @@
 import { Typography } from '@material-ui/core';
 import styled from 'styled-components';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/store';
 import { getPost } from '../../redux/actions/index';
 import { useEffect } from 'react';
-import { PostsType } from '../../interfaces';
 import { useRouter } from 'next/router';
 import PostDetails from '../../components/PostDetails/PostDetails';
 
-type OwnPropsTypes = {
-  postId: number;
-};
-type MapStatePropsType = {
-  singlePost: PostsType;
-  error: boolean;
-};
+const Post: React.FC = () => {
+  const dispatch = useDispatch();
+  const singlePost = useSelector((state: AppStateType) => state.app.singlePost);
 
-type MapDispatchPropsType = {
-  getPost: (postId: number) => void;
-};
-type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsTypes;
-
-const Post: React.FC<PropsType> = ({ getPost, singlePost, error }) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-  // @ts-ignore
-  const id: string = useRouter().query.posts;
-  const postId: number = parseInt(id);
+  const id: any = useRouter().query.posts;
+  const postId = parseInt(id);
 
   useEffect(() => {
     if (postId) {
-      getPost(postId);
+      dispatch(getPost(postId));
     }
   }, [id]);
 
@@ -38,7 +24,7 @@ const Post: React.FC<PropsType> = ({ getPost, singlePost, error }) => {
     <>
       {singlePost ? (
         <Wrapper>
-          <PostDetails singlePost={singlePost} />
+          <PostDetails />
         </Wrapper>
       ) : (
         <Wrapper>
@@ -49,18 +35,7 @@ const Post: React.FC<PropsType> = ({ getPost, singlePost, error }) => {
   );
 };
 
-const mapStateToProps = (state: AppStateType): MapStatePropsType => {
-  return {
-    singlePost: state.app.singlePost,
-    error: state.app.error,
-  };
-};
-
-export default compose(
-  connect<MapStatePropsType, MapDispatchPropsType, OwnPropsTypes, AppStateType>(mapStateToProps, {
-    getPost,
-  })
-)(Post);
+export default Post;
 
 const Wrapper = styled.div`
   margin: 7rem auto;

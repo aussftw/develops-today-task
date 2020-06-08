@@ -54,3 +54,5 @@ export const getPosts = () => async (dispatch: any) => {
   const data = await API.getPosts();
   dispatch(setPosts(data));
 };
+
+export type AppAcationTypes = SetError | SetSinglePost | SetPostsType;

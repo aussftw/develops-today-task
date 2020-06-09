@@ -27,6 +27,7 @@
   "include": [
     "**/*.ts",
     "**/*.tsx",
-    "src/pages/_document.js"
+    "src/pages/_document.js",
+    "src/components/common/Modal/index.tsz"
   ]
 }

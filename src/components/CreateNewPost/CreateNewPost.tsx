@@ -22,9 +22,7 @@ const CreateNewPost: React.FC = () => {
     await Router.push('/');
   };
 
-  const handleChange = (event: React.FormEvent<HTMLInputElement>) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
-    // @ts-ignore
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPostData({ ...postData, [event.target.name]: event.target.value });
   };
 

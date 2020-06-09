@@ -17,6 +17,12 @@ const API = {
   postPost(title: string, body: string) {
     return instance.post(`posts`, { title, body });
   },
+  removePost(postId: number) {
+    return instance.delete(`posts/${postId}`);
+  },
+  editPost(postId: number, title: string, body: string) {
+    return instance.put(`posts/${postId}`, { title, body });
+  },
 };
 
 export default API;

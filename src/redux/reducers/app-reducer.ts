@@ -4,7 +4,7 @@ import { AppAcationTypes } from '../actions/index';
 
 const initialState = {
   posts: [] as Array<PostsType>,
-  singlePost: null as PostsType | null,
+  singlePost: {} as PostsType,
   error: false,
 };
 

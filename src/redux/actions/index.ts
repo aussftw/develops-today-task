@@ -1,6 +1,7 @@
 import API from '../../api/api';
 import * as constants from '../constants';
 import { PostsType } from '../../interfaces/index';
+import Router from 'next/router';
 
 type SetError = {
   type: typeof constants.ERROR;
@@ -26,7 +27,7 @@ export const setSinglePost = (singlePost: PostsType): SetSinglePost => {
 
 type SetPostsType = {
   type: typeof constants.SET_POSTS;
-  posts: PostsType;
+  posts: any;
 };
 export const setPosts = (posts: PostsType): SetPostsType => {
   return {
@@ -36,17 +37,39 @@ export const setPosts = (posts: PostsType): SetPostsType => {
 };
 
 export const createPost = (title: string, body: string) => async (dispatch: any) => {
-  const response = await API.postPost(title, body);
-  if (response.status === 201) {
+  const res = await API.postPost(title, body);
+  if (res.status === 201) {
     const data = await API.getPosts();
     dispatch(setPosts(data));
   }
 };
 
+export const deletePost = (postId: number) => async (dispatch: any) => {
+  const res = await API.removePost(postId);
+  if (res.status === 200) {
+    setError(false);
+    const data = await API.getPosts();
+    dispatch(setPosts(data));
+  } else {
+    dispatch(setError(true));
+  }
+};
+
 export const getPost = (postId: number) => async (dispatch: any) => {
-  const response = await API.getPost(postId);
-  if (response.status === 200) {
-    dispatch(setSinglePost(response.data));
+  const res = await API.getPost(postId);
+  if (res.status === 200) {
+    dispatch(setSinglePost(res.data));
+  }
+};
+
+export const editPost = (postId: number, title: string, body: string) => async (dispatch: any) => {
+  const res = await API.editPost(postId, title, body);
+  if (res.status === 200) {
+    const data = await API.getPosts();
+    dispatch(setPosts(data));
+    await Router.push(`/posts/${postId}`);
+  } else {
+    dispatch(setError(true));
   }
 };
 
